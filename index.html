@@ -1,28 +1,70 @@
 <!DOCTYPE html>
 <html>
+<head>
+  <link rel="stylesheet" href="style.css">
+</head>
 <body>
 <h1>HTML Geolocation</h1>
-<p>Click the button to get your coordinates.</p>
+<p>Update distances based on current position.</p>
 
-<button onclick="getLocation()">Try It</button>
+<button onclick="getLocation()">Update</button>
 
-<p id="demo"></p>
+<div id="demo"></div>
 
+<script src="utils.js"></script>
+<script src="coursepoints.js"></script>
+<script src="record.js"></script>
 <script>
 const x = document.getElementById("demo");
 
+const coursepoints = csvToArr(rawCoursepoints, ",");
+const record = csvToArr(rawRecord, ",");
+
+
+function formatCoursepointsLine(coursepoint, currentDistanceFromStart) {
+  var line = "<tr><td>" + coursepoint["name"] + "</td><td>" + formatToKm(coursepoint["distance"]) + "</td>";
+
+  if (currentDistanceFromStart !== null) {
+    line += "<td>" + formatToKm(coursepoint["distance"] - currentDistanceFromStart) + "</td>";
+  }
+
+  line += "</tr>";
+
+  return line;
+}
+
+function formatCoursepointsTable(distanceFromStart) {
+  var table = "<table>";
+  if (distanceFromStart !== null) {
+    table += "<tr><td>Type</td><td>From Start</td><td>From Current</td></tr>";
+  } else {
+    table += "<tr><td>Type</td><td>From Start</td></tr>";
+  };
+  table += coursepoints.map(coursepoint => formatCoursepointsLine(coursepoint, distanceFromStart)).join("");
+  table += "</table>";
+  return table;
+}
+
+x.innerHTML = formatCoursepointsTable(null);
+
 function getLocation() {
   if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(showPosition);
+    navigator.geolocation.getCurrentPosition(updateFromPosition);
   } else {
     x.innerHTML = "Geolocation is not supported by this browser.";
   }
 }
 
-function showPosition(position) {
-  x.innerHTML = "Latitude: " + position.coords.latitude +
-  "<br>Longitude: " + position.coords.longitude;
+function updateFromPosition(position) {
+  const closestIndex = getClosestPointIndexOnRecord(
+    {"position lat": position.coords.latitude, "position long": position.coords.longitude},
+    record
+  );
+  const currentDistanceFromStart = record[closestIndex]["distance"]
+
+  x.innerHTML = formatCoursepointsTable(currentDistanceFromStart);
 }
+
 </script>
 
 </body>
