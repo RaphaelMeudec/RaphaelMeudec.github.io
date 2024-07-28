@@ -1,22 +1,32 @@
+div {
+  width:100%;
+}
+
 /* Basic table styling */
 table {
   width: 100%;
+  max-width: 800px; /* Maximum width of the table */
+  margin: 20px auto; /* Centering the table */
   border-collapse: collapse;
-  margin: 20px 0;
-  font-size: 16px;
+  font-size: 18px; /* Increased font size */
   text-align: left;
+  display: table;
+  border-radius: 8px; /* Rounded corners to match button */
+  overflow: hidden; /* Ensures rounded corners are visible */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for a modern look */
 }
 
 /* Table header styling */
 th, td {
-  padding: 12px;
+  padding: 15px; /* Increased padding */
   border-bottom: 1px solid #ddd;
+  white-space: nowrap; /* Prevent text wrapping in cells */
 }
 
 /* Table header background color */
 th {
-  background-color: #f2f2f2;
-  color: #333;
+  background-color: #007BFF; /* Primary blue color to match button */
+  color: #fff; /* White text color */
 }
 
 /* Zebra striping for rows */
@@ -27,4 +37,50 @@ tr:nth-child(even) {
 /* Hover effect for rows */
 tr:hover {
   background-color: #f1f1f1;
+}
+
+/* Responsive design for mobile devices */
+@media screen and (max-width: 600px) {
+  table {
+    font-size: 16px; /* Adjusted font size for mobile */
+  }
+  th, td {
+    padding: 10px; /* Adjusted padding for mobile */
+  }
+  th {
+    font-size: 16px; /* Adjusted header font size for mobile */
+  }
+}
+
+/* Main button styling */
+button {
+  background-color: #007BFF; /* Primary blue color */
+  color: #fff; /* White text color */
+  padding: 15px 25px; /* Increased padding for better touch targets */
+  border: none; /* No border */
+  border-radius: 8px; /* Slightly more rounded corners */
+  font-size: 18px; /* Larger font size for better readability */
+  font-weight: bold; /* Bold text */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transitions */
+  width: 100%; /* Full-width button for easier tapping */
+  box-sizing: border-box; /* Ensure padding and border are included in the element's total width and height */
+}
+
+/* Hover effect for the button */
+button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+  transform: scale(1.05); /* Slightly larger on hover */
+}
+
+/* Active state for the button */
+button:active {
+  background-color: #004494; /* Even darker blue when active */
+  transform: scale(1); /* Reset scale on active */
+}
+
+/* Focus state for the button */
+button:focus {
+  outline: none; /* Remove default focus outline */
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5); /* Custom focus outline */
 }
