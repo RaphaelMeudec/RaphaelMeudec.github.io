@@ -11,7 +11,8 @@
 
 <button onclick="getLocation()">Update</button>
 
-<div id="demo" ></div>
+<div id="map"></div>
+<div id="demo"></div>
 
 <script src="utils.js"></script>
 <script src="coursepoints.js"></script>
@@ -21,8 +22,9 @@ const x = document.getElementById("demo");
 
 const coursepoints = csvToArr(rawCoursepoints, ",");
 const record = csvToArr(rawRecord, ",");
+</script>
 
-
+<script>
 function formatCoursepointsLine(coursepoint, currentDistanceFromStart) {
   var line = "<tr><td>" + coursepoint["name"] + "</td><td>" + formatToKm(coursepoint["distance"]) + "</td>";
 
@@ -36,7 +38,11 @@ function formatCoursepointsLine(coursepoint, currentDistanceFromStart) {
 }
 
 function formatCoursepointsTable(distanceFromStart) {
-  var table = "<table>";
+  var table = "";
+  if (distanceFromStart !== null) {
+    table += "<p>Distance estimée du départ: " + formatToKm(distanceFromStart) + "</p>";
+  }
+  table += "<table>";
   if (distanceFromStart !== null) {
     table += "<tr><td>Type</td><td>From Start</td><td>From Current</td></tr>";
   } else {
