@@ -26,7 +26,7 @@ const record = csvToArr(rawRecord, ",");
 
 <script>
 function formatCoursepointsLine(coursepoint, currentDistanceFromStart) {
-  var line = "<tr><td>" + coursepoint["name"] + "</td><td>" + formatToKm(coursepoint["distance"]) + "</td>";
+  var line = "<tr><td>" + coursepoint["type"] + "</td><td>" + coursepoint["name"] + "</td><td>" + formatToKm(coursepoint["distance"]) + "</td>";
 
   if (currentDistanceFromStart !== null) {
     line += "<td>" + formatToKm(coursepoint["distance"] - currentDistanceFromStart) + "</td>";
@@ -44,9 +44,9 @@ function formatCoursepointsTable(distanceFromStart) {
   }
   table += "<table>";
   if (distanceFromStart !== null) {
-    table += "<tr><td>Type</td><td>From Start</td><td>From Current</td></tr>";
+    table += "<tr><td>Type</td><td>Name</td><td>From Start</td><td>From Current</td></tr>";
   } else {
-    table += "<tr><td>Type</td><td>From Start</td></tr>";
+    table += "<tr><td>Type</td><td>Name</td><td>From Start</td></tr>";
   };
   table += coursepoints.map(coursepoint => formatCoursepointsLine(coursepoint, distanceFromStart)).join("");
   table += "</table>";
